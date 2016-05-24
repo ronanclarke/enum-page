@@ -1,13 +1,42 @@
-var app = angular.module('app',[]);
+(function ($) {
 
-angular.module('app').config(function($locationProvider){
+  //
+  // this view manages the searching and updating of the selected results collection
+  //
+  var SearchView = Backbone.View.extend({
+    el: $('#searchView'),
 
-  $locationProvider.html5Mode(true);
+    initialize: function () {
+      _.bindAll(this, 'render');
+
+      this.render();
+    },
+
+    render: function () {
+      $(this.el).append("<ul> <li>hello world</li> </ul>");
+    }
+  });
+
+  //
+  // display the results of the selected enums in this view
+  //
+  var ResultView = Backbone.View.extend({
+    el: $('#resultsView'),
+
+    initialize: function () {
+      _.bindAll(this, 'render');
+
+      this.render();
+    },
+
+    render: function () {
+      $(this.el).append('<div class="col-md-3"> hi there this is the results </div>');
+    }
+  });
+
+  var resultView = new ResultView();
+
+  var searchView = new SearchView();
 
 
-});
-
-app.controller('mainCtrl',function($scope){
-
-  $scope.myVar = "Hello Angular";
-});
+})(jQuery);
