@@ -47,20 +47,38 @@
         },
 
         render: function () {
-            _(allData.models).each(function(item){ // in case collection is not empty
+            _(allData.models).each(function (item) { // in case collection is not empty
                 this.appendItem(item);
             }, this);
 
+            return this;
         },
 
-        appendItem: function(item){
-
-            $("#classList",this.el).append('<li class="list-group-item">' + item.get("ClassName") + "</li>");
+        appendItem: function (item) {
+            $("#classList", this.el).append(new ResultItemView({model: item}).render().el);
         }
     });
 
     var ResultItemView = Backbone.View.extend({
 
+        tagName: "li",
+        attributes:{
+            class: "list-group-item"
+        },
+
+        events: {},
+
+        initialize: function () {
+            _.bindAll(this, 'render');
+        },
+
+
+        render: function () {
+
+            $(this.el).html('<span >' + this.model.get("ClassName") + "</span>");
+
+            return this;
+        }
     });
 
     var resultView = new ResultView();
