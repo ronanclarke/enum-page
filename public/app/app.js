@@ -1,66 +1,71 @@
 (function ($) {
 
-  var app = app || {}
-  app.views = {}
-  app.collections = {}
-  app.models = {}
+    var app = app || {}
+    app.views = {}
+    app.collections = {}
+    app.models = {}
 
-  var allData = Backbone.Collection.extend({
-    model: itemModel
-  });
-  var itemModel = Backbone.Model.extend({
+    var allData = Backbone.Collection.extend({
+        model: itemModel
+    });
 
-  });
+    var data = window.data;
+    console.log(data)
+    var allData = new Backbone.Collection(data);
 
-  //
-  // this view manages the searching and updating of the selected results collection
-  //
-  var SearchView = Backbone.View.extend({
-    el: $('#searchView'),
+    console.log(allData.length);
 
+    var itemModel = Backbone.Model.extend({});
 
-    initialize: function () {
-      _.bindAll(this, 'render');
-
-
-      this.render();
-    },
-
-    render: function () {
-
-      var data = window.data;
-      console.log(data)
-      allData = new Backbone.Collection(data);
-
-      console.log(allData.length);
+    //
+    // this view manages the searching and updating of the selected results collection
+    //
+    var SearchView = Backbone.View.extend({
+        el: $('#searchView'),
 
 
+        initialize: function () {
+            _.bindAll(this, 'render');
 
 
-      $(this.el).append("<ul> <li>hello world</li> </ul>");
-    }
-  });
+            this.render();
+        },
 
-  //
-  // display the results of the selected enums in this view
-  //
-  var ResultView = Backbone.View.extend({
-    el: $('#resultsView'),
 
-    initialize: function () {
-      _.bindAll(this, 'render');
+    });
 
-      this.render();
-    },
+    //
+    // display the results of the selected enums in this view
+    //
+    var ResultView = Backbone.View.extend({
+        el: $('#resultsView'),
 
-    render: function () {
-      $(this.el).append('<div class="col-md-3"> hi there this is the results </div>');
-    }
-  });
+        initialize: function () {
+            _.bindAll(this, 'render');
 
-  var resultView = new ResultView();
+            this.render();
+        },
 
-  var searchView = new SearchView();
+        render: function () {
+            _(allData.models).each(function(item){ // in case collection is not empty
+                this.appendItem(item);
+            }, this);
+
+        },
+
+        appendItem: function(item){
+
+            $("#classList",this.el).append('<li class="list-group-item">' + item.get("ClassName") + "</li>");
+        }
+    });
+
+    var ResultItemView = Backbone.View.extend({
+
+    });
+
+    var resultView = new ResultView();
+
+    var searchView = new SearchView();
 
 
 })(jQuery);
