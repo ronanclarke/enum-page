@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="css/custom.css">
 
     <script type="application/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
-    <script type="application/javascript" src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="vendor/bootstrap/dist/js/bootstrap.js"></script>
     <script type="application/javascript" src="vendor/underscore/underscore.js"></script>
     <script type="application/javascript" src="vendor/backbone/backbone.js"></script>
 
@@ -35,13 +35,15 @@
 
     <div class="row">
         <div id="resultsView" class="col-md-4">
+            <div id="classList" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
-            <ul id="classList" class="list-group"/>
+
+            </div>
 
 
         </div>
-        <div class="col-md-8">
-            Pinned panels go here
+        <div id="pinnedView" class="col-md-8">
+
         </div>
 
     </div>
@@ -50,6 +52,62 @@
 </body>
 
 </html>
+
+
+<script type="text/html" id="pinnedItemTemplate">
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+            <span class="panel-title"><%= pinnedItem.get("enumName") %></span>
+
+        </div>
+
+
+            <ul class="list-group">
+                <% _.each(pinnedItem.get("fieldList"), function(fieldPair){ %>
+                <li class="list-group-item"> <%= fieldPair.Key %> <span class="pull-right"><%= fieldPair.Value %></span>
+                </li>
+
+                <% }) %>
+
+
+            </ul>
+
+
+
+    </div>
+
+</script>
+
+
+<script type="text/html" id="resultItemTemplate">
+
+    <div class="panel-heading ">
+        <span class="panel-title">
+            <a class="collapsed small clickableTitle" role="button" data-toggle="collapse" data-parent="#accordion"
+               href="#collapse<%= id%>" aria-expanded="false" aria-controls="collapse<%= id %>">
+                <%= _.last(resultItem.get("ClassName").split(/\./)) %>
+            </a>
+        </span>
+
+    </div>
+
+    <div id="collapse<%= id %>" class="panel-collapse collapse " role="tabpanel" aria-expanded="true"
+         aria-labelledby="heading<%= id %>">
+        <ul class="list-group">
+            <% _.each(enumItems, function(enumItem){ %>
+            <li class="list-group-item enumLabel"> <%= enumItem.enumName %>
+                <button type="button" class="btn btn-xs btn-info pull-right" id="btn_<%= enumItem.enumName %>">View
+                </button>
+            </li>
+
+            <% }) %>
+
+
+        </ul>
+    </div>
+
+</script>
+
 
 <script>
     window.data = [{
