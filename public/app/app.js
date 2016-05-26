@@ -142,9 +142,10 @@
     addToPinned:function(e){
       var enumName = ($(e.currentTarget).attr("id")).replace("btn_","");
       _.each(this.model.get("enumItems"),function(item){
-        if(item.enumName == enumName){
-          filteredData.add(item);
-          return;
+        if(item.enumName == enumName ){
+            filteredData.add(item);
+            return;
+
         }
       });
     },
