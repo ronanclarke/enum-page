@@ -79,7 +79,7 @@
     },
 
     events:{
-      "click .panel-title":"removeMe"
+      "click .fa-times":"removeMe"
     },
     removeMe:function(){
       this.model.destroy();
